@@ -1,6 +1,6 @@
 ﻿namespace TodoServerApp.Data.Interfaces
 {
-    public interface IDataServise
+    public interface IDataService
     {
         Task<IEnumerable<TaskItem>> GetTaskItemsAsync();
     }
