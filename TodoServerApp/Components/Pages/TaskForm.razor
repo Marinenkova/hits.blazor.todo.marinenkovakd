@@ -29,8 +29,28 @@
 </EditForm>
 
 @code {
+    [Parameter]
+    public int Id { get; set; }
     [SupplyParameterFromForm]
     TaskItem TaskItem { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (TaskItem == null)
+        {
+            TaskItem = new();
+            if (Id != 0)
+            {
+                var src = await data.GetTaskAsync(Id);
+                TaskItem.Id = src.Id;
+                TaskItem.Title = src.Title;
+                TaskItem.Description = src.Description;
+                TaskItem.CreatedDate = src.CreatedDate;
+                TaskItem.FinishDate = src.FinishDate;
+            }
+        }
+    }
 
     async Task ValidSubmit()
     {
